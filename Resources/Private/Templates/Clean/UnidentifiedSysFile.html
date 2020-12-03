@@ -1,0 +1,33 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>FAL cleaner</h1>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+            <h2>Precheck</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Entries in sys_file <span class="badge badge-success badge-pill"><f:format.number decimals="0" thousandsSeparator=".">{sysFiles->f:count()}</f:format.number></span></li>
+                <li class="list-group-item">
+                    Unidentified sys_file entries
+                    <f:if condition="{unidentifiedSysFiles->f:count()} > 0">
+                        <f:then>
+                            <span class="badge badge-danger badge-pill">
+                                <f:format.number decimals="0" thousandsSeparator=".">{unidentifiedSysFiles->f:count()}</f:format.number>
+                            </span>
+                        </f:then>
+                        <f:else>
+                            <span class="badge badge-success badge-pill">0</span>
+                        </f:else>
+                    </f:if>
+                </li>
+            </ul>
+            <h2>File listing</h2>
+            <ul class="list-group">
+                <f:for each="{unidentifiedSysFiles}" as="unidentifiedSysFile">
+                    <li class="list-group-item">[STORAGE] {unidentifiedSysFile.identifier}</li>
+                </f:for>
+            </ul>
+            <f:link.action action="unidentifiedSysFileDelete" class="btn btn-primary">delete unidentified entries in sys_file</f:link.action>
+        </div>
+    </div>
+</f:section>

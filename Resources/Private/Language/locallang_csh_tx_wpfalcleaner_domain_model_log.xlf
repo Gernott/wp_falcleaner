@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:wp_falcleaner/Resources/Private/Language/locallang_csh" date="2018-03-04T14:25:00Z" product-name="wp_falcleaner">
+		<header/>
+		<body>
+			<trans-unit id="filename.description" resname="filename.description">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="reason.description" resname="reason.description">
+				<source>Reason</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

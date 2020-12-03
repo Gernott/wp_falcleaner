@@ -1,0 +1,50 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>FAL cleaner</h1>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+            <h2>Precheck</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Entries in sys_file_reference <span class="badge badge-success badge-pill"><f:format.number decimals="0" thousandsSeparator=".">{sysFileReference.0.count}</f:format.number></span></li>
+                <li class="list-group-item">
+                    Unidentified sys_file_reference entries
+                    <f:if condition="{unidentifiedSysFileReferences->f:count()} > 0">
+                        <f:then>
+                            <span class="badge badge-danger badge-pill">
+                                <f:format.number decimals="0" thousandsSeparator=".">{unidentifiedSysFileReferences->f:count()}</f:format.number>
+                            </span>
+                        </f:then>
+                        <f:else>
+                            <span class="badge badge-success badge-pill">0</span>
+                        </f:else>
+                    </f:if>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h2>File listing</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>sys_file uid</th>
+                    <th>sys_file identifier</th>
+                    <th>sys_file_reference uid_foreign</th>
+                    <th>sys_file_reference tablenames</th>
+                    <th>sys_file_reference fieldname</th>
+                </tr>
+            </thead>
+            <f:for each="{unidentifiedSysFileReferences}" as="unidentifiedSysFileReference">
+                <tr>
+                    <td>{unidentifiedSysFileReference.uid}</td>
+                    <td>{unidentifiedSysFileReference.identifier}</td>
+                    <td>{unidentifiedSysFileReference.uid_foreign}</td>
+                    <td>{unidentifiedSysFileReference.tablenames}</td>
+                    <td>{unidentifiedSysFileReference.fieldname}</td>
+                </tr>
+            </f:for>
+        </table>
+    </div>
+    <f:link.action action="unidentifiedSysFileReferenceDelete" class="btn btn-primary">delete unidentified entries in sys_file_reference</f:link.action>
+</f:section>

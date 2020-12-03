@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:wp_falcleaner/Resources/Private/Language/locallang_db" date="2018-03-04T14:25:00Z" product-name="wp_falcleaner">
+		<header/>
+		<body>
+			<trans-unit id="tx_wpfalcleaner_domain_model_log" resname="tx_wpfalcleaner_domain_model_log">
+				<source>Log</source>
+			</trans-unit>
+			<trans-unit id="tx_wpfalcleaner_domain_model_log.filename" resname="tx_wpfalcleaner_domain_model_log.filename">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="tx_wpfalcleaner_domain_model_log.reason" resname="tx_wpfalcleaner_domain_model_log.reason">
+				<source>Reason</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

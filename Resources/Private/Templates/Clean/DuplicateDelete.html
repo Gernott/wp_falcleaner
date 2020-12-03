@@ -1,0 +1,27 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>FAL cleaner</h1>
+    <f:if condition="{cleanupFiles->f:count()} > 0">
+        <f:then>
+            <f:for each="{cleanupFiles}" as="cleanupFile">
+                <div class="panel panel-default">
+                    <div class="panel-heading">SHA1: {cleanupFile.duplicateFiles.0.sha1}</div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <f:for each="{cleanupFile.keepFiles}" as="keepFile">
+                                <li class="list-group-item list-group-item-success">{keepFile.publicUrl}</li>
+                            </f:for>
+                            <f:for each="{cleanupFile.deleteFiles}" as="deleteFile">
+                                <li class="list-group-item list-group-item-danger">{deleteFile.publicUrl}</li>
+                            </f:for>
+                        </ul>
+                    </div>
+                </div>
+            </f:for>
+        </f:then>
+        <f:else>
+            There are no duplicates to delete.
+        </f:else>
+    </f:if>
+</f:section>

@@ -1,0 +1,124 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+    <h1>FAL cleaner</h1>
+    <f:form action="duplicateDelete">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                <h2>Precheck</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Duplicates <span class="badge badge-success badge-pill"><f:format.number decimals="0" thousandsSeparator=".">{duplicates->f:count()}</f:format.number></span></li>
+                    <li class="list-group-item">Expected purged discspace (bytes) <span class="badge badge-success badge-pill" id="purge"></span></li>
+                </ul>
+                <h2>Rules</h2>
+                <div id="rulesPlace"></div>
+                <p>
+                <a class="btn btn-default" id="newRule" href="#" title="New rule" data-original-title="New rule">
+                    <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-add" data-identifier="actions-add">
+                        <span class="icon-markup">
+                            <svg class="icon-color" role="img"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-add"></use></svg>
+                        </span>
+                    </span>
+                    add rule
+                </a>
+                </p>
+                <f:form.submit class="btn btn-primary" value="Preview"name="preview" />
+                <f:form.submit class="btn btn-primary" value="Delete duplicates (!)"name="delete" />
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-8 col-xl-9">
+                <h2>Rules Help</h2>
+                <p>You can create one or more rules. The rules get processed in the direction from top to bottom.</p>
+                <p>If you create no rule, the rule 'Keep newest' will be used.</p>
+                <p>If you create one or more rules, but there are still duplicate files after rendering, the rule 'Keep newest' will be appended.</p>
+                <p>The cleaner script migrates all sys_file_references and respect links in RTE's.</p>
+                <h3>Keep newest</h3>
+                <p>The file with newest filedate will be kept. All other files get deleted. No further rules will be respected.</p>
+                <h3>Keep oldest</h3>
+                <p>The file with oldest filedate will be kept. All other files get deleted. No further rules will be respected.</p>
+                <h3>Keep from folder</h3>
+                <p>If a duplicate file is found in this folder, it will be kept.</p>
+                <h3>Don't keep from folder</h3>
+                <p>If a duplicate file is found in this folder, it will be deleted.</p>
+                <h3>Don't keep without references</h3>
+                <p>If duplicate files are found without references (no usage), they will be deleted.</p>
+                <h3>Don't keep with _01 in filename</h3>
+                <p>If duplicate files are found with a copy appendix (e.g. image_01.jpg), they will be deleted.</p>
+            </div>
+        </div>
+    </f:form>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>File listing</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover duplicateTable">
+                    <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Count</th>
+                        <th>Size of file (Bytes)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <f:for each="{duplicates}" as="duplicate">
+                            <tr>
+                                <td>{duplicate.name}</td>
+                                <td>{duplicate.count}</td>
+                                <td class="text-right" data-value="{duplicate.size}"><f:format.number thousandsSeparator="." decimals="0">{duplicate.size}</f:format.number></td>
+                            </tr>
+                        </f:for>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <template id="rule">
+        <div class="panel panel-default rule">
+            <div class="panel-heading text-right">
+                <a class="btn btn-default moveupRule" href="#" title="Up" data-original-title="Move up in list">
+                    <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-move-up" data-identifier="actions-move-up">
+                        <span class="icon-markup">
+                            <svg class="icon-color" role="img"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-up"></use></svg>
+                        </span>
+                    </span>
+                </a>
+                <a class="btn btn-default movedownRule" href="#" title="Down" data-original-title="Move up in list">
+                    <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-move-down" data-identifier="actions-move-down">
+                        <span class="icon-markup">
+                            <svg class="icon-color" role="img"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-caret-down"></use></svg>
+                        </span>
+                    </span>
+                </a>
+                <a class="btn btn-default deleteRule" href="#" data-title="Delete" title="Delete">
+                    <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-edit-delete" data-identifier="actions-edit-delete">
+                        <span class="icon-markup">
+                            <svg class="icon-color" role="img"><use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-delete"></use></svg>
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <select class="type form-control" name="tx_wpfalcleaner_tools_wpfalcleanerfalcleaner[types][]">
+                            <option value="keepnew">Keep newest</option>
+                            <option value="keepold">Keep oldest</option>
+                            <option value="keepfolder" data-show="true">Keep from folder</option>
+                            <option value="deletefolder" data-show="true">Don't keep from folder</option>
+                            <option value="deletereference">Don't keep without references</option>
+                            <option value="deletefilename">Don't keep with _01 in filename</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="foldername form-control" type="text" name="tx_wpfalcleaner_tools_wpfalcleanerfalcleaner[names][]" placeholder="fileadmin/test/" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <style>
+        .rule:first-child .moveupRule,
+        .rule:last-child .movedownRule {
+            display:none;
+        }
+    </style>
+</f:section>
