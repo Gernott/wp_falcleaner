@@ -2,10 +2,22 @@
     "name": "webprofil/wp-falcleaner",
     "type": "typo3-cms-extension",
     "description": "Find duplicate files and clean up database and filesystem.",
+    "license": "GPL-2.0-or-later",
+    "support": {
+        "source": "https://github.com/Gernott/wp_falcleaner",
+        "issues": "https://github.com/Gernott/wp_falcleaner/issues/"
+    },
     "authors": [
         {
             "name": "Gernot Ploiner",
-            "role": "Developer"
+            "role": "Developer",
+            "homepage": "https://www.webprofil.at"
+        }
+    ],
+    "funding": [
+        {
+            "type": "WEBprofil - Gernot Ploiner e.U.",
+            "url": "https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=QBA9FNKYU98BQ"
         }
     ],
     "require": {
@@ -22,7 +34,12 @@
         }
     },
     "replace": {
-        "webprofil/wp-falcleaner": "self.version",
         "typo3-ter/wp-falcleaner": "self.version"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "wp_falcleaner"
+        }
     }
 }
+
